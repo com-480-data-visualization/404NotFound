@@ -2,7 +2,7 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-|Cornaz Antoine | |
+|Cornaz Antoine | 339526|
 | Bürki Benjamin| 311199|
 | Charline Huangfu | 342201|
 
