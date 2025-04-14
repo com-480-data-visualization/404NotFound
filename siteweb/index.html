@@ -1,42 +1,43 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cinematic Success Data Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinematic Success Data Vizualization</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/theme.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-  <header>
-    <h1>Cinematic Success Data Visualization </h1>
-    <nav>
-      <a href="explore.html">Explore</a>
-      <a href = "audience.html">Audience</a>
-      <a href="gross.html">Gross</a>
-      <a href="awards.html">Awards</a>
-    </nav>
-  </header>
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="assets/img/main.mp4" type="video/mp4">
+  </video>
+
+  <div id="navbar"></div>
 
   <section class="hero">
-    <h2>What Makes a Movie Truly Successful?</h2>
-    <p>Explore how financial success, critical acclaim, and industry recognition each tell a different story.</p>
-    <button onclick="location.href='explore.html'">Lights, Camera, Action !</button>
-    <p>Grab the popcorn, the blockbuster is about to begin! </p>
+    <h2>What Makes a Movie Successful ?</h2>
+
+    <p>
+      The film industry is one of the most influential and profitable entertainment sectors in the world. 
+      This project dives into a rich dataset spanning over 100 years (1920 - 2025) of cinematic history. </p>
+
+    <p>Explore how
+      <span class="stress-word">financial success</span>, 
+      <span class="stress-word">critical acclaim</span> and
+      <span class="stress-word">industry recognition</span> 
+      each tell a different story. </p>
+
+    <button onclick="location.href='explore.html'">Light, Camera, Action !</button>
+    <p>Grab the <span class="stress-word">popcorn</span>, the <span class="stress-word">blockbuster</span> is about to begin !</p>
   </section>
 
-  <script src="assets/js/main.js"></script>
+  <div id="footer"></div>
 
-  <footer class="site-footer">
-    <p>
-      This project was created by Bürki Benjamin, Cornaz Antoine, and Huangfu Charline for the course COM-480 at EPFL.
-      <br>
-      Data source:
-      <a href="https://www.kaggle.com/datasets/raedaddala/imdb-movies-from-1960-to-2023/data" target="_blank">IMDb Movies Dataset (1925–2025) from Kaggle</a>
-    </p>
-  </footer>
+  <script src="assets/js/bar.js"></script>
 
 </body>
 
