@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinematic Success Data Vizualization</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/theme.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/timeline.css" />
+</head>
+
+<body>
+
+  <div id="navbar"></div>
+
+  <section class="sucess">
+        <h3><span id="Feature">Feature</span> Analysis</h3>
+
+        <p>Let’s analyze which characteristics lead to high <span id="focus-word" class = "stress-word">Feature</span>.</p>
+
+        <div class="filter-container">
+            <div class="filter-dropdown">
+    
+            <label for="category-filter">Select Characteristic:</label>
+                <select id="category-filter">
+                    <option value="genre">Genre</option>
+                    <option value="year">Release Year</option>
+                    <option value="budget">Budget</option>
+                    <option value="languages">Languages</option>
+                    <option value="duration">Duration</option>            
+            </select>
+    
+            <p>Total Movies : <span id="total_movies">Calculating...</span></p>
+        </div>
+
+    </section>
+
+    <section class="podium-section">
+
+        <h4>Top 3 Films</h4>
+        <div class="podium" id="top3-container"></div>
+
+    </section>
+
+    <section class = "bubble">
+
+
+    </section>
+
+    
+    <div id="timeline"></div>
+    <div id="footer"></div>
+
+    <script src="assets/js/analysis.js"></script>
+    <script src="assets/js/timeline.js"></script>
+    <script src="assets/js/bar.js"></script>
+
+
+</body>
+
+</html>

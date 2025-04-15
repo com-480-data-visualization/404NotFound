@@ -95,6 +95,20 @@ nav a:hover {
   margin: 1em auto ;
 }
 
+.podium-section {
+  text-align: center;
+  padding: auto ;
+  position: relative;
+  z-index: 1;
+}
+
+.podium-section h4 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--imdb-yellow);
+  margin-bottom: 1em;
+}
+
 .stress-word {
   font-family: var(--font-title);
   font-weight: bold;
@@ -131,7 +145,7 @@ nav a:hover {
 
 .average-stats {
   display: flex;
-  gap: 2em;
+  gap: 3em;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 1em;
