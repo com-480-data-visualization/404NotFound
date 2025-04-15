@@ -1,0 +1,22 @@
+.timeline {
+    position: sticky; 
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--imdb-black);
+    border-top: 2px solid var(--imdb-yellow);
+    padding: 1em;
+    z-index: 100;
+  }
+  
+  .timeline-filter {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 20px;
+    padding-right: 2em;
+    align-items: center;
+  }
+  
+  
+
+  

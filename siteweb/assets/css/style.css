@@ -1,10 +1,32 @@
+.site-title {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-title:hover {
+  text-decoration: underline;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 body {
+  flex : 1;
   margin: 0;
   padding: 0;
   font-family: var(--font-main);
   background-color: var(--imdb-dark);
   color: var(--imdb-white);
   overflow-x: hidden;
+}
+
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .bg-video {
@@ -45,14 +67,14 @@ nav a:hover {
   color: var(--imdb-white);
 }
 
-.hero {
+.sucess {
   text-align: center;
-  padding: 6em 2em;
+  padding: auto ;
   position: relative;
   z-index: 1;
 }
 
-.hero h2 {
+.sucess h2 {
   font-family: var(--font-title);
   font-size: 2.2rem;
   color: var(--imdb-yellow);
@@ -60,11 +82,17 @@ nav a:hover {
   text-shadow: 0 0 42px var(--imdb-yellow);
 }
 
+.sucess h3 {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  color: var(--imdb-yellow);
+  margin-bottom: 1em;
+}
 
-.hero p {
+.sucess p {
   font-size: 1.1rem;
   max-width: 700px;
-  margin: 2em auto 2em;
+  margin: 1em auto ;
 }
 
 .stress-word {
@@ -75,6 +103,49 @@ nav a:hover {
   position: relative;
 }
 
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin: 2em auto;
+  gap: 1em;
+}
+
+.filter-dropdown {
+  text-align: center;
+}
+
+.filter-dropdown label {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+#category-filter {
+  padding: 0.5em;
+  border: 2px solid var(--imdb-yellow);
+  background-color: var(--imdb-black);
+  color: var(--imdb-yellow);
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.average-stats {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
+
+.average-stats div {
+  background-color: var(--imdb-yellow);
+  color: var(--imdb-black);
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 150px;
+}
 
 button {
   background-color: var(--imdb-yellow);
@@ -92,12 +163,25 @@ button:hover {
   transform: scale(1.03);
 }
 
+.sankey-section {
+  margin: 4em 2em;
+  padding: 2em;
+  background-color: var(--imdb-dark);
+  border: 1px solid var(--imdb-yellow);
+  border-radius: 12px;
+}
+
+#sankey-container {
+  width: 100%;
+  height: 500px;
+  margin-top: 2em;
+}
+
 .site-footer {
   text-align: center;
   font-size: 0.85rem;
   color: var(--imdb-gray);
-  padding: 2rem;
-  margin-top: 3rem;
+  padding: 2em;
   border-top: 1px solid #333;
   background-color: var(--imdb-dark);
 }
