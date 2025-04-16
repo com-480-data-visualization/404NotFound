@@ -15,3 +15,4 @@ fetch('assets/components/timeline.html')
     document.getElementById('timeline').innerHTML = data;
   });
 
+

@@ -29,10 +29,8 @@
             <label for="category-filter">Select Characteristic:</label>
                 <select id="category-filter">
                     <option value="genre">Genre</option>
-                    <option value="year">Release Year</option>
                     <option value="budget">Budget</option>
                     <option value="languages">Languages</option>
-                    <option value="duration">Duration</option>            
             </select>
     
             <p>Total Movies : <span id="total_movies">Calculating...</span></p>
@@ -40,13 +38,7 @@
 
     </section>
 
-    <section class="podium-section">
-
-        <h4>Top 3 Films</h4>
-        <div class="podium" id="top3-container"></div>
-
-    </section>
-
+    
     <section class = "bubble">
 
 
@@ -56,9 +48,11 @@
     <div id="timeline"></div>
     <div id="footer"></div>
 
-    <script src="assets/js/analysis.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
     <script src="assets/js/timeline.js"></script>
     <script src="assets/js/bar.js"></script>
+    <script src="assets/js/analysis.js"></script>
 
 
 </body>

@@ -31,11 +31,10 @@
 
         <label for="category-filter">Select Characteristic:</label>
             <select id="category-filter">
+                <option value = "all"></option>
                 <option value="genre">Genre</option>
-                <option value="year">Release Year</option>
                 <option value="budget">Budget</option>
                 <option value="languages">Languages</option>
-                <option value="duration">Duration</option>            
         </select>
 
         <p>Total Movies : <span id="total_movies">Calculating...</span></p>
@@ -61,9 +60,13 @@
     <div id="timeline"></div>
     <div id="footer"></div>
 
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    
     <script src="assets/js/timeline.js"></script>
     <script src="assets/js/bar.js"></script>
-
+    <script src="assets/js/explore.js"></script>
+    
 
 </body>
 
