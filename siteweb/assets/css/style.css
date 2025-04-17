@@ -89,24 +89,22 @@ nav a:hover {
   margin-bottom: 1em;
 }
 
-.sucess p {
-  font-size: 1.1rem;
-  max-width: 700px;
-  margin: 1em auto ;
-}
-
-.podium-section {
+h4 {
   text-align: center;
   padding: auto ;
   position: relative;
-  z-index: 1;
-}
-
-.podium-section h4 {
   font-family: var(--font-title);
   font-size: 1.5rem;
   color: var(--imdb-yellow);
   margin-bottom: 1em;
+  text-shadow: 0 0 42px var(--imdb-yellow);
+}
+
+
+.sucess p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 1em auto ;
 }
 
 .stress-word {
@@ -184,19 +182,20 @@ button:hover {
   padding: auto ;
   width: 100%;
   max-width: 1000px;
-  margin: 3em auto;
+  margin: auto;
   height: auto;
 }
 
 #sankey-container {
   padding : 2em;
+  margin-bottom: 3em;
 } 
 
-
-svg {
+#sankey-container svg {
   width: 100%;
   height: 110%;
   overflow: visible;
+  background-color: transparent; 
 }
 
 .sankey-node {
@@ -230,6 +229,161 @@ svg {
   font-size: 14px;
   margin : auto;
 }
+
+.sankey-links path.highlighted {
+  stroke: var(--hover-yellow);
+  stroke-opacity: 0.9;
+}
+
+.sankey-links path {
+  transition: stroke 0.3s, stroke-opacity 0.3s;
+}
+
+.hierarchy-selectors {
+  display: flex;
+  gap: 2rem; 
+  background-color: var(--imdb-dark); 
+  border-radius: 10px;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.hierarchy-selectors div {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  width: 100%;
+}
+
+.hierarchy-selectors label {
+  color: var(--imdb-white);
+  margin-bottom: 0.5rem;
+  font-size: 1.1 rem;
+}
+
+.hierarchy-selectors select {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--imdb-yellow);
+  border-radius: 6px;
+  background-color: var(--imdb-black);
+  color: var(--imdb-yellow);
+  font-weight: bold;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.hierarchy-selectors select:hover {
+  background-color: var(--hover-yellow);
+}
+
+.hierarchy-selectors select:focus {
+  border-color: var(--imdb-white); 
+  outline: none;
+  background-color: var(--imdb-dark); 
+}
+
+.hierarchy-selectors select option {
+  background-color: var(--imdb-black); 
+  color: var(--imdb-yellow); 
+}
+
+.hierarchy-selectors select option:hover {
+  background-color: var(--hover-yellow); 
+}
+
+.hierarchy-selectors select option[value=""] {
+  color: #b0b0b0;  
+  background-color: var(--imdb-black); 
+}
+
+.hierarchy-selectors select option[value=""]:hover {
+  color: #b0b0b0;  
+  background-color: var(--imdb-black); 
+}
+
+
+/* Zoom bubble*/ 
+#bubble {
+  width: auto;
+  height : auto;
+  max-width: 1000px;
+  margin: auto;
+  padding: auto;
+}
+
+#bubble select {
+  margin: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid var(--imdb-gray);
+  background-color: var(--imdb-white);
+  color: var(--imdb-dark);
+}
+
+#bubble svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: hsl(50, 100%, 85%);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#bubble circle {
+  stroke: var(--imdb-white);
+  stroke-width: 1px;
+  transition: stroke 0.3s ease;
+}
+
+#bubble text {
+  fill: var(--imdb-black);
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/*
+#buble-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: auto ;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  height: auto;
+}
+
+#buble-chart{
+  width: 100%;
+  height: 110%;
+  overflow: visible;
+}
+
+.node circle {
+  stroke: var(--imdb-dark);
+  stroke-width: 0.5;
+}
+
+.node text {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 9px;
+  fill: var(--imdb-white);
+  pointer-events: none;
+}
+
+.legend text {
+  font-size: 12px;
+  fill: var(--imdb-dark);
+}
+*/
+
 
 .site-footer {
   text-align: center;
