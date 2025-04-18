@@ -105,7 +105,7 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
     }
   }
 
-
+//
   function nest(data, keys) {
     if (!keys.length) {
       return data.map(d => ({name: d.title, data: d}));
