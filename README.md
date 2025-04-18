@@ -6,7 +6,7 @@
 | Bürki Benjamin| 311199|
 | Charline Huangfu | 342201|
 
-[Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
+[Milestone 1](https://github.com/com-480-data-visualization/404NotFound/blob/master/Milestone%201.pdf) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
 ## Milestone 1 (21st March, 5pm)
 
