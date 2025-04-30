@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cinematic Success Data Vizualization</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/theme.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link rel="stylesheet" href="assets/css/timeline.css"/>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<section class="sucess">
+    <h3><span id="Feature">Feature</span> Analysis</h3>
+
+  <p>Let’s analyze which characteristics lead to high <span id="focus-word" class="stress-word">Feature</span>.</p>
+
+</section>
+
+<div class="hierarchy-selectors">
+    <div>
+      <label for="layer1"><strong>Key characteristics 1</strong></label>
+      <select id="layer1">
+        <option value="genre" selected>Genre</option>
+        <option value="budget">Budget</option>
+        <option value="language">Language</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="layer2"><strong>Key characteristics 2</strong></label>
+      <select id="layer2">
+        <option value="budget" selected>Budget</option>
+        <option value="genre">Genre</option>
+        <option value="language">Language</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="layer3"><strong>Key characteristics 3</strong></label>
+      <select id="layer3">
+        <option value="language" selected>Language</option>
+        <option value="genre">Genre</option>
+        <option value="budget">Budget</option>
+      </select>
+    </div>
+</div>
+
+
+<h4>Top 100</h4>
+
+<div id="bubble"></div>
+
+
+<div id="timeline"></div>
+<div id="footer"></div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script src="assets/js/timeline.js"></script>
+<script src="assets/js/bar.js"></script>
+<script src="assets/js/analysis.js"></script>
+
+
+</body>
+
+</html>
