@@ -1,0 +1,17 @@
+{
+  "name": "poster-downloader",
+  "version": "1.0.0",
+  "description": "Download movie posters from OMDb and save them to year-based folders",
+  "type": "module",
+  "main": "downloadPoster.js",
+  "scripts": {
+    "start": "node getPoster.js"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "node-fetch": "^3.3.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
