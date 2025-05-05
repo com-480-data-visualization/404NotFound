@@ -21,11 +21,19 @@ const DAY = 1; // We have 1'000 api calls so change to day 1, 2, ... to make nex
     this file enable to get the poster of a movie by giving the film title and year.
     This will cache the film on the folder data/images/year
 
-    // Example usage
+    // Example usage 1. Get the local url
 
     fetchPosterWithCache("Oppenheimer", 2023, (filePath) => {
         console.log("Poster ready at:", filePath);
     });
+
+    // Example usage 2 Get the image
+
+    getPosterImage('Inception', 2010, (imageBuffer) => {
+        // Do something with imageBuffer, e.g., send it in HTTP response
+        console.log(`Image size: ${imageBuffer.length} bytes`);
+    });
+
 */
 
 // Get poster URL from OMDb
@@ -86,6 +94,22 @@ export async function fetchPosterWithCache(title, year, onReady) {
 }
 
 
+/**
+ * Wrapper function that fetches the poster image and returns its contents
+ * @param {string} title - Movie title
+ * @param {number|string} year - Release year
+ * @param {function(Buffer):void} onImageReady - Callback with image buffer
+ */
+export async function getPosterImage(title, year, onImageReady) {
+    await fetchPosterWithCache(title, year, async (imagePath) => {
+        try {
+            const imageBuffer = await fs.readFile(imagePath);
+            onImageReady(imageBuffer);
+        } catch (readErr) {
+            console.error(`Failed to read image at ${imagePath}:`, readErr.message);
+        }
+    });
+}
 
 
 
@@ -134,8 +158,15 @@ async function processAndFetchPosters(csvUrl) {
 }
 
 // Example usage
-processAndFetchPosters('../../data/final_dataset.csv');
+//processAndFetchPosters('../../data/final_dataset.csv');
 
+// Example usage 2
+/*
+getPosterImage('Inception', 2010, (imageBuffer) => {
+    // Do something with imageBuffer, e.g., send it in HTTP response
+    console.log(`Image size: ${imageBuffer.length} bytes`);
+});
+ */
 
 /*fetchPosterWithCache("What Ever Happened to Baby Jane?", 1962, (filePath) => {
     console.log("Poster ready at:", filePath);
