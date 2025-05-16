@@ -407,3 +407,31 @@ function drawBubbleChart(data) {
   });
 }
 */
+
+// Wait and search by movie title
+function goToDetailsPage(movieTitle, retries = 10) {
+    if (dataset.length === 0) {
+        if (retries <= 0) {
+            alert("Dataset could not be loaded.");
+            return;
+        }
+        console.log("Waiting for dataset to load...");
+        setTimeout(() => goToDetailsPage(movieTitle, retries - 1), 300);
+        return;
+    }
+
+
+    const selectedMovie = dataset.find(
+        m => m.title?.toLowerCase().trim() === movieTitle.toLowerCase().trim()
+    );
+
+    if (!selectedMovie) {
+        alert(`Movie "${movieTitle}" not found in dataset.`);
+        return;
+    }
+
+    console.log(movieTitle);
+
+    localStorage.setItem('selectedMovie', JSON.stringify(selectedMovie));
+    window.location.href = 'details.html';
+}
