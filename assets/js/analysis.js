@@ -430,8 +430,6 @@ function goToDetailsPage(movieTitle, retries = 10) {
         return;
     }
 
-    console.log(movieTitle);
-
     localStorage.setItem('selectedMovie', JSON.stringify(selectedMovie));
     window.location.href = 'details.html';
 }
