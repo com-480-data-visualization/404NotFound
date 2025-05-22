@@ -57,14 +57,14 @@ fetch('assets/data/data_v2.csv')
 
 //Filter date
 function filterByDate(data, minYear, maxYear) {
-return data.filter(d => {
-  const year = parseInt(d.year);
-  return year >= minYear && year <= maxYear;
-});
+  return data.filter(d => {
+    const year = parseInt(d.year);
+    return year >= minYear && year <= maxYear;
+  });
 }
 
 function updateStats(data) {
-document.getElementById("total_movies").textContent = data.length;
+  document.getElementById("total_movies").textContent = data.length;
 }
 
 const layer1 = document.getElementById("layer1");
@@ -72,46 +72,37 @@ const layer2 = document.getElementById("layer2");
 const layer3 = document.getElementById("layer3");
 
 function isValidSelection(l1, l2, l3) {
-return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
+  return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
 }
 
 function handleLayerChange() {
-const l1 = layer1.value;
-const l2 = layer2.value;
-const l3 = layer3.value;
+  const l1 = layer1.value;
+  const l2 = layer2.value;
+  const l3 = layer3.value;
 
-if (isValidSelection(l1, l2, l3)) {
-  drawBubbleChart(dataset, l1, l2, l3);
-}
+  if (isValidSelection(l1, l2, l3)) {
+    drawBubbleChart(dataset, l1, l2, l3);
+  }
 }
 
 
 //Bubble
 
 async function drawBubbleChart(data, layer1, layer2, layer3) {
-// Limit to top 100 films by gross for readability
-const sortedData = [...data].sort((a, b) => b.gross - a.gross).slice(0, 100);
+  // Limit to top 100 films by gross for readability
+  const sortedData = [...data].sort((a, b) => b.gross - a.gross).slice(0, 100);
 
-function getValue(d, key) {
-  switch (key) {
-    case "genre":
-      return d.genre_grouped_main;
-    case "budget":
-      return d.budget_category
-    case "language":
-      return d.languages_main;
-    default:
-      return d[key];
-  }
-}
-
-// Convert to nested structure
-function nest(data, keys) {
-  if (!keys.length) {
-    return data.map(d => ({
-      name: d.title || "leaf", // ou tout autre champ unique
-      data: d
-    }));
+  function getValue(d, key) {
+    switch (key) {
+      case "genre":
+        return d.genre_grouped_main;
+      case "budget":
+        return d.budget_category
+      case "language":
+        return d.languages_main;
+      default:
+        return d[key];
+    }
   }
 
 //
@@ -128,7 +119,6 @@ function nest(data, keys) {
       children: nest(v, rest)
     }));
   }
-}
 
 
   const nestedData = {
@@ -137,9 +127,13 @@ function nest(data, keys) {
   };
 
 
-// Bubble chart dimensions
-const width = 1000;
-const height = 1000;
+  //
+  function getFocusField(focus) {
+    if (focus === "gross") return "gross_worldwide";
+    if (focus === "awards") return "oscars";
+    if (focus === "audience") return "rating";
+    return "gross_worldwide"; // fallback
+  }
 
   // Assign size (gross) at leaf level
   function assignValue(node, focus) {
@@ -165,6 +159,8 @@ const height = 1000;
   assignValue(nestedData, focus);
 
   // Bubble chart dimensions
+  const width = 1000;
+  const height = 1000;
 
   const color = d3.scaleLinear()
       .domain([0, 5])
@@ -180,9 +176,10 @@ const height = 1000;
 
   const root = pack(nestedData);
   let currentFocus = root;
+
   let view;
 
-  d3.select("#bubble").html(""); // Clear chart
+  d3.select("#bubble").html(""); // Clear previous chart
   const svg = d3.select("#bubble")
       .append("svg")
       .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
@@ -225,7 +222,7 @@ const height = 1000;
       .style("display", d => d.parent === root ? "inline" : "none")
       .text(d => d.data.name);
 
-  svg.on("click", event => zoom(event, root));
+  svg.on("click", (event) => zoom(event, root));
   zoomTo([root.x, root.y, root.r * 2]);
 
   function zoomTo(v) {
@@ -233,7 +230,7 @@ const height = 1000;
     view = v;
     label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
     node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-    node.select("circle").attr("r", d => d.r * k);
+    node.attr("r", d => d.r * k);
   }
 
   function zoom(event, d) {

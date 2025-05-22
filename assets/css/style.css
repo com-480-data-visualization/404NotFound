@@ -24,9 +24,11 @@ body {
 }
 
 .page-wrapper {
-  flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center; 
 }
 
 .bg-video {
@@ -119,7 +121,7 @@ h4 {
   display: flex;
   flex-direction: column;
   align-items: center; 
-  margin: 2em auto;
+  margin-bottom: 2em;
   gap: 1em;
 }
 
@@ -153,6 +155,7 @@ h4 {
   background-color: var(--imdb-yellow);
   color: var(--imdb-black);
   padding: 1em 1.5em;
+  margin : 2em;
   border-radius: 8px;
   font-weight: bold;
   text-align: center;

@@ -1,22 +1,123 @@
 .timeline {
-    position: sticky; 
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--imdb-black);
-    border-top: 2px solid var(--imdb-yellow);
-    padding: 1em;
-    z-index: 100;
-  }
-  
-  .timeline-filter {
-    display: flex;
-    justify-content: flex-end; 
-    gap: 20px;
-    padding-right: 2em;
-    align-items: center;
-  }
-  
-  
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background: var(--imdb-black);
+  padding-top: 2.5em;
+  padding-bottom : 1.5em;
+  border-top: 2px solid var(--imdb-yellow);
+}
 
-  
+.timeline-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#timeline-slider {
+  position: relative;
+  height: 42px;
+  background:var(--imdb-dark);
+  border: 2px solid var(--imdb-yellow);
+  border-radius: 8px;
+  padding-inline: 15px;
+  box-sizing: border-box;
+}
+
+/*film strip*/
+#range-bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 10px,
+      var(--imdb-black),
+      var(--imdb-black),
+      transparent 15px,
+      transparent 40px
+    );
+  border-radius: 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#topcap, #bottomcap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--imdb-black) 0,
+    var(--imdb-black) 5px,
+    var(--imdb-white) 5px,
+    var(--imdb-white) 10px
+  );
+  z-index: 2;
+}
+#topcap { top: 0; }
+#bottomcap { bottom: 0; }
+
+/* Handle styles */
+.handle {
+  position: absolute;
+  top: -6px;
+  width: 16px;
+  height: 54px;
+  background: var(--imdb-black);
+  border: 2px solid var(--imdb-yellow);
+  border-radius: 4px;
+  cursor: ew-resize;
+  z-index: 2;
+}
+
+.tooltip {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--imdb-yellow);
+  color: var(--imdb-black);
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#markers {
+  position: absolute;
+  left: 20px; 
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--imdb-yellow);
+  pointer-events: none;
+  user-select: none;
+}
+
+.marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 1px;
+  height: 40px;
+  background: var(--imdb-yellow);
+}
+
+.marker-label {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  background: var(--imdb-dark);
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: var(--imdb-yellow);
+  pointer-events: none;
+  white-space: nowrap;
+}
