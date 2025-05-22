@@ -39,7 +39,7 @@
       transparent 40px
     );
   border-radius: 8px;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -55,8 +55,9 @@
     var(--imdb-white) 5px,
     var(--imdb-white) 10px
   );
-  z-index: 2;
+  z-index: 1;
 }
+
 #topcap { top: 0; }
 #bottomcap { bottom: 0; }
 
@@ -70,7 +71,7 @@
   border: 2px solid var(--imdb-yellow);
   border-radius: 4px;
   cursor: ew-resize;
-  z-index: 2;
+  z-index: 1;
 }
 
 .tooltip {
