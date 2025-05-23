@@ -171,3 +171,5 @@ getPosterImage('Inception', 2010, (imageBuffer) => {
 /*fetchPosterWithCache("What Ever Happened to Baby Jane?", 1962, (filePath) => {
     console.log("Poster ready at:", filePath);
 });*/
+
+
