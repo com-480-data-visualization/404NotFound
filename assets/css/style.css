@@ -117,31 +117,70 @@ h4 {
   position: relative;
 }
 
-.filter-container {
+.features-selectors {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  background-color: var(--imdb-dark);
+  border-radius: 10px;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  padding: 1rem;
+  max-width: 1000px;
+}
+
+.dropdown-container {
+  flex: 1;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  margin-bottom: 2em;
-  gap: 1em;
+  gap: 0.5rem;
 }
 
-.filter-dropdown {
-  text-align: center;
-}
-
-.filter-dropdown label {
+.dropdown-container label {
+  color: var(--imdb-white);
+  font-size: 1rem;
   font-weight: bold;
-  margin-right: 0.5em;
 }
 
-#category-filter {
-  padding: 0.5em;
-  border: 2px solid var(--imdb-yellow);
-  background-color: var(--imdb-black);
+/* Custom Tom Select Styling */
+.ts-control {
+  background-color: var(--imdb-dark);
   color: var(--imdb-yellow);
+  border: 2px solid var(--imdb-yellow);
   font-weight: bold;
   border-radius: 6px;
+  padding: 0.5rem;
 }
+
+.ts-control:hover {
+  background-color: var(--hover-yellow);
+}
+
+.ts-dropdown {
+  background-color: var(--imdb-dark);
+  color: var(--imdb-yellow);
+  border: 2px solid var(--imdb-yellow);
+  border-radius: 6px;
+}
+
+.ts-dropdown .active {
+  background-color: var(--hover-yellow);
+  color: var(--imdb-dark);
+}
+
+.ts-dropdown [data-value="All"] {
+  font-weight: bold;
+}
+
+
+.item {
+  background-color: var(--imdb-yellow);
+  color: var(--imdb-dark);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
 
 .average-stats {
   display: flex;
@@ -155,7 +194,7 @@ h4 {
   background-color: var(--imdb-yellow);
   color: var(--imdb-black);
   padding: 1em 1.5em;
-  margin : 2em;
+  margin-bottom : 3em;
   border-radius: 8px;
   font-weight: bold;
   text-align: center;
@@ -186,13 +225,24 @@ button:hover {
   width: 100%;
   max-width: 1000px;
   margin: auto;
+  margin-bottom: 4em;
   height: auto;
+  padding : 2em;
 }
 
-#sankey-container {
-  padding : 2em;
-  margin-bottom: 3em;
-} 
+#tooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  z-index: 1000;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--imdb-white);
+  background-color:var(--imdb-dark);
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
 
 #sankey-container svg {
   width: 100%;
@@ -213,6 +263,7 @@ button:hover {
   stroke : var(--imdb-white);
   transition: stroke 0.2s ease;
   stroke-opacity: 0.4;
+  fill : none;
 }
 
 .sankey-links path:hover {
@@ -225,11 +276,12 @@ button:hover {
   font-weight : bold;
 }
 
+
 .sankey-column-labels {
   text-align: center;
   font-weight: bold;
   fill: var(--imdb-white); 
-  font-size: 14px;
+  font-size: 18px;
   margin : auto;
 }
 

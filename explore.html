@@ -24,8 +24,11 @@
         <p> This page offers an overview of various aspects that contribute to a movie's success — from <span class="stress-word">financial performance</span>, to <span class="stress-word">audience reception</span>, and <span class="stress-word">industry awards</span>. <br>
         Dive into key characteristics to explore how different movies succeed in unique ways.</p>
 
+        <p>Total Movies : <span id="total_movies">Calculating...</span></p>
+
     </section>
 
+    <!--
     <div class="filter-container">
         <div class="filter-dropdown">
 
@@ -36,10 +39,11 @@
                 <option value="budget">Budget</option>
                 <option value="languages">Languages</option>
         </select>
-
+      </div>
     </div>
+    -->
 
-    <p>Total Movies : <span id="total_movies">Calculating...</span></p>
+    
 
     <div class="average-stats">
       <div>
@@ -52,11 +56,13 @@
         <strong>Average Awards :</strong><br><span id="average-awards">Calculating...</span>
       </div>
     </div>
-  </div>
 
     
-    <div id="sankey-container"></div>
-
+    <div class = "sankey">
+      <div id="sankey-container"></div>
+      <div id = "tooltip"></div>
+    </div>
+    
     
     <div id="timeline"></div>
     <div id="footer"></div>
