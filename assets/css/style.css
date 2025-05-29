@@ -65,6 +65,15 @@ nav a {
   transition: color 0.3s ease;
 }
 
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;               /* sit on top of everything else */
+}
+
 nav a:hover {
   color: var(--imdb-white);
 }
