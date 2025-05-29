@@ -10,16 +10,35 @@ let leftTooltip
 let rightTooltip
 
 const originalInit = window.initTimeline;
+
+
+// replace your handleChange with a debounced version of doUpdate:
+const debouncedUpdate = debounce(doUpdate, 50);
+
 window.initTimeline = function() {
     // 1) call the real timeline setup
     originalInit();
-    const slider = document.getElementById('timeline-slider');
-    leftTooltip = document.getElementById('left-handle');
-    rightTooltip = document.getElementById('right-handle');
+    leftTooltip = document.getElementById('left-tooltip');
+    rightTooltip = document.getElementById('right-tooltip');
 
-    slider.addEventListener('mouseup',  handleChange);
-    slider.addEventListener('touchend', handleChange);
+    // 2. make a MutationObserver whose callback fires whenever the text node changes
+    const observer = new MutationObserver((mutations) => {
+        for (let m of mutations) {
+            // childList mutations will fire when textContent is reassigned
+            if (m.type === 'childList') {
+                debouncedUpdate()
+            }
+        }
+    });
 
+    // 3. start observing: watch for added or removed child nodes (i.e. the text node)
+    observer.observe(leftTooltip, {
+        childList: true,
+    });
+
+    observer.observe(rightTooltip, {
+        childList: true,
+    })
 };
 
 
@@ -46,7 +65,7 @@ function updateFocusDisplay() {
 // ——————————————————————————————————————————————————————————————
 // 2. whenever the user changes the focus <select>…
 // ——————————————————————————————————————————————————————————————
-focusSelect.addEventListener('change', handleChange);
+focusSelect.addEventListener('change', debouncedUpdate);
 
 // ——————————————————————————————————————————————————————————————
 // 3. on initial load, also call updateFocusDisplay()
@@ -67,9 +86,6 @@ document.getElementById("focus-word").textContent = displayFocus;
 
 let rawDataset = [];
 let dataset = [];
-
-let currentMinYear = minYear;
-let currentMaxYear = maxYear;
 
 
 fetch('assets/data/data_v2.csv')
@@ -92,7 +108,7 @@ fetch('assets/data/data_v2.csv')
 
       // Attacher les listeners
       [layer1, layer2, layer3].forEach(select => {
-        select.addEventListener("change", handleChange);
+        select.addEventListener("change", debouncedUpdate);
       });
     });
 
@@ -111,28 +127,15 @@ function isValidSelection(l1, l2, l3) {
   return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
 }
 
-function handleChange() {
-
-    focus = focusSelect.value;           // 2.a update our “focus” variable
-    updateFocusDisplay();                // 2.b refresh the labels on the page
-
-  const l1 = layer1.value;
-  const l2 = layer2.value;
-  const l3 = layer3.value;
-
-  currentMinYear = leftTooltip.outerText;
-  currentMaxYear = rightTooltip.outerText;
-
-  dataset = filterByDate(rawDataset, currentMinYear, currentMaxYear);
-
-  if (isValidSelection(l1, l2, l3)) {
-    drawBubbleChart(dataset, l1, l2, l3);
-  }
-}
 
 
+let bubbleCount = 0;
 //Bubble
 async function drawBubbleChart(data, layer1, layer2, layer3) {
+
+
+    bubbleCount++;
+    console.log("count", bubbleCount)
     // ─── 1. Build & value the hierarchy ────────────────────────────────
     const sortedData = [...data]
         .sort((a, b) => (+b.gross) - (+a.gross))
@@ -346,3 +349,30 @@ function goToDetailsPage(movieTitle, retries = 10) {
     localStorage.setItem('selectedMovie', JSON.stringify(selectedMovie));
     window.location.href = 'details.html';
 }
+
+
+// wrap your heavy draw in a debounced function
+function doUpdate() {
+    focus = focusSelect.value;           // 2.a update our “focus” variable
+    updateFocusDisplay();                // 2.b refresh the labels on the page
+
+    const l1 = layer1.value;
+    const l2 = layer2.value;
+    const l3 = layer3.value;
+
+    dataset = filterByDate(rawDataset, leftTooltip.textContent, rightTooltip.textContent);
+
+    if (isValidSelection(l1, l2, l3)) {
+        drawBubbleChart(dataset, l1, l2, l3);
+    }
+}
+
+// simple debounce helper
+function debounce(fn, delay) {
+    let id;
+    return (...args) => {
+        clearTimeout(id);
+        id = setTimeout(() => fn(...args), delay);
+    };
+}
+
