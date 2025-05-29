@@ -1,0 +1,23 @@
+:root {
+    /* Colors */
+    --imdb-yellow: #f5c518;
+    --imdb-black: #000000;
+    --imdb-dark: #121212;
+    --imdb-gray: #cccccc;
+    --imdb-white: #ffffff;
+
+    /* hover*/
+    --hover-yellow: #ffdc3a;
+  
+    /* Chart Colors */
+    --chart-blue: #4e79a7;
+    --chart-orange: #f28e2b;
+    --chart-green: #59a14f;
+    --chart-red: #e15759;
+    --chart-purple: #b07aa1;
+  
+    /* Fonts */
+    --font-main: 'Arial', 'Helvetica Neue', sans-serif;
+    --font-title: 'Bebas Neue', sans-serif;
+  }
+  
