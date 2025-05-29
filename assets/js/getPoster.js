@@ -17,7 +17,6 @@ async function getPosterUrl(title, year) {
     try {
         const headResp = await fetch(localUrl, { method: 'HEAD' });
         if (headResp.ok) {
-            console.log(`poster ${localUrl}` )
             return localUrl;
         }
     } catch (err) {
@@ -26,19 +25,7 @@ async function getPosterUrl(title, year) {
     }
 
     // 2) Query OMDb JSON API for this title/year
-    /*try {
-        const apiResp = await fetch(omdbApiUrl);
-        if (apiResp.ok) {
-            const json = await apiResp.json();
-            // OMDb returns Poster: "N/A" if none found
-            if (json.Poster && json.Poster !== 'N/A') {
-                return json.Poster;
-            }
-        }
-    } catch (err) {
-        // API network error—ignore and fall back
-        console.error(err);
-    }*/
+    // TODO without waiting for each image to download before displaying everything.
 
     // 3) Ultimate fallback
     return placeholder;
