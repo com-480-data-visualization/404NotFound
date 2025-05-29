@@ -26,9 +26,17 @@
 </section>
 
 <div class="hierarchy-selectors">
+    <!-- 1. Focus selector -->
+    <div id="sort">
+        <label for="focus"><strong>Sort</strong></label>
+        <select id="focus">
+            <option value="gross" selected>Gross</option>
+            <option value="audience">Audience</option>
+            <option value="awards">Awards</option>
+        </select>
+    </div>
+
     <div>
-      <!-- TODO remove this line just a test -->
-      <button onclick="goToDetailsPage('anand')">Test button to page individual movie</button>
       <label for="layer1"><strong>Key characteristics 1</strong></label>
       <select id="layer1">
         <option value="genre" selected>Genre</option>
@@ -70,6 +78,7 @@
 <script src="assets/js/timeline.js"></script>
 <script src="assets/js/bar.js"></script>
 <script src="assets/js/analysis.js"></script>
+<script src="assets/js/getPoster.js"></script>
 
 
 </body>

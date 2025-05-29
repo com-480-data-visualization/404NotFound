@@ -255,7 +255,7 @@ button:hover {
   transition: stroke 0.3s, stroke-opacity 0.3s;
 }
 
-.hierarchy-selectors {
+.hierarchy-selectors, .controls {
   display: flex;
   gap: 2rem; 
   background-color: var(--imdb-dark); 
@@ -265,20 +265,20 @@ button:hover {
   max-width: 1000px;
 }
 
-.hierarchy-selectors div {
+.hierarchy-selectors div, .controls div{
   display: flex;
   flex-direction: column;
   min-width: 150px;
   width: 100%;
 }
 
-.hierarchy-selectors label {
+.hierarchy-selectors label, .controls label {
   color: var(--imdb-white);
   margin-bottom: 0.5rem;
   font-size: 1.1 rem;
 }
 
-.hierarchy-selectors select {
+.hierarchy-selectors select, .controls select {
   padding: 0.7rem 1rem;
   font-size: 1rem;
   border: 2px solid var(--imdb-yellow);
@@ -290,35 +290,38 @@ button:hover {
   cursor: pointer;
 }
 
-.hierarchy-selectors select:hover {
+.hierarchy-selectors select:hover, .controls select:hover {
   background-color: var(--hover-yellow);
 }
 
-.hierarchy-selectors select:focus {
+.hierarchy-selectors select:focus, .controls select:focus {
   border-color: var(--imdb-white); 
   outline: none;
   background-color: var(--imdb-dark); 
 }
 
-.hierarchy-selectors select option {
+.hierarchy-selectors select option, .controls select {
   background-color: var(--imdb-black); 
   color: var(--imdb-yellow); 
 }
 
-.hierarchy-selectors select option:hover {
+.hierarchy-selectors select option:hover, .controls select:hover {
   background-color: var(--hover-yellow); 
 }
 
-.hierarchy-selectors select option[value=""] {
+.hierarchy-selectors select option[value=""], .controls select {
   color: #b0b0b0;  
   background-color: var(--imdb-black); 
 }
 
-.hierarchy-selectors select option[value=""]:hover {
+.hierarchy-selectors select option[value=""]:hover, .controls select:hover {
   color: #b0b0b0;  
   background-color: var(--imdb-black); 
 }
 
+#sort {
+  margin-bottom: 30px;
+}
 
 /* Zoom bubble*/ 
 #bubble {

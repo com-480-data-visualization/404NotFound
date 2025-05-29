@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const data = localStorage.getItem('selectedMovie');
     if (data) {
-        console.log(data);
         const movie = JSON.parse(data);
         document.getElementById('movie-title').textContent = movie.title;
         document.getElementById('movie-year').textContent = movie.year;
@@ -20,10 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('movie-star').innerHTML = `<strong>Star(s):</strong> ${stars.join(', ')}`;
 
 
-        const posterUrl = getPosterUrl(movie.title, movie.year)
-        console.log("poster url", posterUrl)
-        document.getElementById('movie-poster').src = posterUrl;
-
+        getPosterUrl(movie.title, movie.year).then(poster => { document.getElementById('movie-poster').src = poster;})
     } else {
         // Fallback if no movie found
         document.getElementById('movie-title').textContent = 'Movie not found';
