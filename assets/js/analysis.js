@@ -119,7 +119,7 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
     // ─── 1. Build & value the hierarchy ────────────────────────────────
     const sortedData = [...data]
         .sort((a, b) => (+b.gross) - (+a.gross))
-        .slice(0, 100);  // TODO: change back to 100
+        .slice(0, 100);
 
     function getValue(d, key) {
         switch (key) {
@@ -286,7 +286,11 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
                 return t => zoomTo(i(t));
             });
 
-        label.filter(d => d.parent === currentFocus || this.style.display === "inline")
+        label.filter(function(d) {
+            // here `this` is the <text> element, so this.style.display works
+            return d.parent === currentFocus
+                || this.style.display === "inline";
+        })
             .transition(t)
             .style("fill-opacity", d => d.parent === currentFocus ? 1 : 0)
             .on("start", function(d) {
