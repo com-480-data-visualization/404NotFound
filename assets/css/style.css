@@ -323,6 +323,11 @@ button:hover {
   margin-bottom: 30px;
 }
 
+.g, #g {
+  font-size: 100%;
+  color: #59a14f;
+}
+
 /* Zoom bubble*/ 
 #bubble {
   width: auto;

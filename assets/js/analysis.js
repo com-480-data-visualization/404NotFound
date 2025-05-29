@@ -13,7 +13,7 @@ const originalInit = window.initTimeline;
 
 
 // replace your handleChange with a debounced version of doUpdate:
-const debouncedUpdate = debounce(doUpdate, 50);
+const debouncedUpdate = debounce(doUpdate, 250);
 
 window.initTimeline = function() {
     // 1) call the real timeline setup
@@ -273,15 +273,21 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
 
     // ─── 6. Labels ────────────────────────────────────────────────────
     const label = svg.append("g")
-        .style("font","10px sans-serif")
         .attr("pointer-events","none")
         .attr("text-anchor","middle")
         .selectAll("text")
         .data(root.descendants())
         .join("text")
+        .style("font", "bold 12px sans-serif")
+        .style("stroke", "white")
+        .style("fill", "black") // text
         .style("fill-opacity", d => d.parent === root ? 1 : 0)
         .style("display",     d => d.parent === root ? "inline" : "none")
-        .text(d => d.data.name);
+        .text(d => maxSizeTitle(d.data.name));
+
+    function maxSizeTitle(str, size=20){
+        return str.substring(0, size);
+    }
 
     // ─── 7. Zoom setup ────────────────────────────────────────────────
     svg.on("click", event => zoom(event, root));
