@@ -28,9 +28,6 @@ const categoryFilter = document.getElementById("category-filter");
 
 let dataset = [];
 
-// TO DO FILTER INPUT YEAR
-const minYear = 1960;
-const maxYear = 2025;
 
 fetch('assets/data/data_v2.csv')
     .then(response => response.text())
@@ -87,7 +84,6 @@ function handleLayerChange() {
 
 
 //Bubble
-
 async function drawBubbleChart(data, layer1, layer2, layer3) {
   // Limit to top 100 films by gross for readability
   const sortedData = [...data].sort((a, b) => b.gross - a.gross).slice(0, 100);
@@ -257,156 +253,6 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
   }
 }
 
-
-/*
-function drawBubbleChart(data) {
-  const width = 1000;
-  const height = 1000;
-
-  let topData;
-    if (focus === "gross") {
-      topData =  data
-      .filter(d => !isNaN(d.gross_worldwide))
-      .sort((a, b) => parseFloat(b.gross_worldwide) - parseFloat(a.gross_worldwide))
-      .slice(0, 100);
-    } else if (focus === "audience") {
-      topData =  data
-      .filter(d => !isNaN(d.rating))
-      .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
-      .slice(0, 100);
-    } else if (focus === "awards") {
-      topData =  data
-      .filter(d => !isNaN(d.oscars))
-      .sort((a, b) => parseFloat(b.oscars) - parseFloat(a.oscars))
-      .slice(0, 100);
-    }
-
-  let category = document.getElementById("category-filter").value;
-
-  if (category === "genre") {
-    category = "genre_grouped_main";
-  } else if (category === "languages") {
-    category = "languages_main";
-  } else if (category === "budget") {
-    category = "budget_category";
-  } else {
-    category = "genre_grouped_main";
-  }
-
-  const categories = Array.from(new Set(data.map(d => d[category])));
-
-  const container = d3.select("#bubble");
-  container.selectAll("*").remove(); // Clear before redraw
-
-  const svg = container.append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-    const color = d3.scaleOrdinal()
-    .domain(categories)
-    .range([
-      "#f5c518", "#e50914", "#0000ff", "#4caf50", "#ff6f61",
-      "#8e44ad", "#00acc9", "#ff9800", "#795548","#800000",
-      "#ec407a","#6c757d","#008080"
-    ]);
-
-    let domainValues;
-    if (focus === "awards") {
-      domainValues = [0, d3.max(data, d => +d.oscars || 0)];
-    } else if (focus === "gross") {
-      domainValues = d3.extent(data, d => +d.gross_worldwide || 0);
-    } else if (focus === "audience") {
-      domainValues = [0, 10];
-    } else {
-      domainValues = [0, 1];
-    }
-
-  const size = d3.scaleSqrt()
-    .domain(domainValues)
-    .range([5, 75]);
-
-  const nodesGroup = svg.append("g");
-
-  const nodes = nodesGroup.selectAll("g.node")
-    .data(topData)
-    .enter()
-    .append("g")
-    .attr("class", "node");
-
-    nodes.append("circle")
-    .attr("r", d => {
-      if (focus === "gross") return size(+d.gross_worldwide || 0);
-      if (focus === "audience") return size(+d.rating || 0);
-      if (focus === "awards") return size(+d.oscars || 0);
-      return size(5);
-    })
-    .attr("class", "node circle")
-    .attr("fill", d => color(d[category]));
-
-
-  nodes.append("text")
-    .text(d => d.title.length > 20 ? d.title.slice(0, 17) + "…" : d.title)
-    .attr("class","node text")
-    .attr("dy", "0.35em")
-    .style("pointer-events", "none");
-
-  const simulation = d3.forceSimulation(topData)
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("charge", d3.forceManyBody().strength(5))
-    .force("collision", d3.forceCollide(d => {
-      if (focus === "gross") return size(+d.gross_worldwide || 0) + 2;
-      if (focus === "awards") return size(+d.oscars || 0) + 2;
-      if (focus === "audience") return size(+d.rating || 0) + 2;
-      return size(5) + 2;
-    }))
-    .on("tick", () => {
-      nodes.attr("transform", d => {
-        const r = focus === "gross" ? size(+d.gross_worldwide || 0) :
-                  focus === "awards" ? size(+d.oscars || 0) :
-                  focus === "audience" ? size(+d.rating || 0) :
-                  size(5);
-        d.x = Math.max(r, Math.min(width - r, d.x));
-        d.y = Math.max(r, Math.min(height - r, d.y));
-        return `translate(${d.x},${d.y})`;
-      });
-    });
-
-  nodes.call(d3.drag()
-    .on("start", (event, d) => {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    })
-    .on("drag", (event, d) => {
-      d.fx = event.x;
-      d.fy = event.y;
-    })
-    .on("end", (event, d) => {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }));
-
-  // Legend
-  const legend = svg.append("g").attr("transform", "translate(20,20)");
-
-  categories.forEach((cat, i) => {
-    legend.append("circle")
-      .attr("cx", 0)
-      .attr("cy", i * 20)
-      .attr("r", 6)
-      .attr("fill", color(cat));
-
-    legend.append("text")
-      .attr("x", 12)
-      .attr("y", i * 20 + 4)
-      .text(cat)
-      .style("font-size", "12px")
-      .style("fill", "white")
-      .style("alignment-baseline", "middle");
-  });
-}
-*/
 
 // Wait and search by movie title
 function goToDetailsPage(movieTitle, retries = 10) {

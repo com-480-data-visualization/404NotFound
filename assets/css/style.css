@@ -74,6 +74,10 @@ nav a {
   z-index: 1000;               /* sit on top of everything else */
 }
 
+.sucess {
+  padding-top: 60px;           /* or whatever the navbar’s height is */
+}
+
 nav a:hover {
   color: var(--imdb-white);
 }
@@ -323,6 +327,7 @@ button:hover {
   max-width: 1000px;
   margin: auto;
   padding: auto;
+  border: #003F5C 1px solid;
 }
 
 #bubble select {
@@ -359,8 +364,8 @@ button:hover {
   pointer-events: none;
 }
 
-/*
-#buble-container {
+
+#bubble-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -394,7 +399,7 @@ button:hover {
   font-size: 12px;
   fill: var(--imdb-dark);
 }
-*/
+
 
 
 .site-footer {
