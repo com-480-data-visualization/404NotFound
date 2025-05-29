@@ -6,6 +6,23 @@ const layer1      = document.getElementById('layer1');
 const layer2      = document.getElementById('layer2');
 const layer3      = document.getElementById('layer3');
 
+let leftTooltip
+let rightTooltip
+
+const originalInit = window.initTimeline;
+window.initTimeline = function() {
+    // 1) call the real timeline setup
+    originalInit();
+    const slider = document.getElementById('timeline-slider');
+    leftTooltip = document.getElementById('left-handle');
+    rightTooltip = document.getElementById('right-handle');
+
+    slider.addEventListener('mouseup',  handleChange);
+    slider.addEventListener('touchend', handleChange);
+
+};
+
+
 // allow focus to be mutable
 let focus = focusSelect.value;
 
@@ -29,18 +46,7 @@ function updateFocusDisplay() {
 // ——————————————————————————————————————————————————————————————
 // 2. whenever the user changes the focus <select>…
 // ——————————————————————————————————————————————————————————————
-focusSelect.addEventListener('change', () => {
-    focus = focusSelect.value;           // 2.a update our “focus” variable
-    updateFocusDisplay();                // 2.b refresh the labels on the page
-
-    // 2.c if the layers are valid, re-draw the chart with new focus
-    const l1 = layer1.value;
-    const l2 = layer2.value;
-    const l3 = layer3.value;
-    if (isValidSelection(l1, l2, l3)) {
-        drawBubbleChart(dataset, l1, l2, l3);
-    }
-});
+focusSelect.addEventListener('change', handleChange);
 
 // ——————————————————————————————————————————————————————————————
 // 3. on initial load, also call updateFocusDisplay()
@@ -58,20 +64,24 @@ const displayFocus = focusDisplayNames[focus]
 document.getElementById("Feature").textContent = capitalize(focus);
 document.getElementById("focus-word").textContent = displayFocus;
 
-const categoryFilter = document.getElementById("category-filter");
 
+let rawDataset = [];
 let dataset = [];
+
+let currentMinYear = minYear;
+let currentMaxYear = maxYear;
 
 
 fetch('assets/data/data_v2.csv')
     .then(response => response.text())
     .then(text => {
-      dataset = d3.csvParse(text);
-      dataset = filterByDate(dataset, minYear, maxYear);
 
       const defaultL1 = "genre";
       const defaultL2 = "budget";
       const defaultL3 = "language";
+
+      rawDataset = d3.csvParse(text);
+      dataset = filterByDate(rawDataset, minYear, maxYear);
 
       if (isValidSelection(defaultL1, defaultL2, defaultL3)) {
         layer1.value = defaultL1;
@@ -82,9 +92,11 @@ fetch('assets/data/data_v2.csv')
 
       // Attacher les listeners
       [layer1, layer2, layer3].forEach(select => {
-        select.addEventListener("change", handleLayerChange);
+        select.addEventListener("change", handleChange);
       });
     });
+
+
 
 //Filter date
 function filterByDate(data, minYear, maxYear) {
@@ -94,19 +106,24 @@ function filterByDate(data, minYear, maxYear) {
   });
 }
 
-function updateStats(data) {
-  document.getElementById("total_movies").textContent = data.length;
-}
-
 
 function isValidSelection(l1, l2, l3) {
   return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
 }
 
-function handleLayerChange() {
+function handleChange() {
+
+    focus = focusSelect.value;           // 2.a update our “focus” variable
+    updateFocusDisplay();                // 2.b refresh the labels on the page
+
   const l1 = layer1.value;
   const l2 = layer2.value;
   const l3 = layer3.value;
+
+  currentMinYear = leftTooltip.outerText;
+  currentMaxYear = rightTooltip.outerText;
+
+  dataset = filterByDate(rawDataset, currentMinYear, currentMaxYear);
 
   if (isValidSelection(l1, l2, l3)) {
     drawBubbleChart(dataset, l1, l2, l3);

@@ -21,7 +21,7 @@ async function getPosterUrl(title, year) {
         }
     } catch (err) {
         // network/CORS error—ignore and fall back
-        console.warn(err);
+        //console.warn(err);
     }
 
     // 2) Query OMDb JSON API for this title/year
