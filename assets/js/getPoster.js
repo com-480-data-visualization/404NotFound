@@ -7,7 +7,7 @@
  */
 async function getPosterUrl(title, year) {
     const key          = 'f58a7502';  // your OMDb API key
-    const encodedTitle = title.toLowerCase().replace(/[^a-z0-9\.]/g, '');
+    const encodedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, '');
     const localUrl     = `./data/images/${year}/${encodedTitle}.jpg`;
     const omdbApiUrl   = `https://www.omdbapi.com/?apikey=${key}&t=${encodedTitle}&y=${year}`;
     const placeholder  = './data/images/no-poster.jpeg'; // a generic fallback
