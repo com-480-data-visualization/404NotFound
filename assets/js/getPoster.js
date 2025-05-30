@@ -12,7 +12,6 @@ async function getPosterUrl(title, year) {
     const omdbApiUrl   = `https://www.omdbapi.com/?apikey=${key}&t=${encodedTitle}&y=${year}`;
     const placeholder  = './data/images/no-poster.jpeg'; // a generic fallback
 
-    console.log(encodedTitle);
     // 1) Check local file via HEAD
     try {
         const headResp = await fetch(localUrl, { method: 'HEAD' });
@@ -28,5 +27,5 @@ async function getPosterUrl(title, year) {
     // TODO without waiting for each image to download before displaying everything.
 
     // 3) Ultimate fallback
-    return placeholder;
+    return null;
 }
