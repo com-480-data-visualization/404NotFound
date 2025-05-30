@@ -16,6 +16,35 @@
     opacity: 1;
 }
 
+#footer {
+    width: 100%;
+    pointer-events: none; /* pointer-events only allowed when visible */
+}
+
+#footer .site-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+    background: rgba(0,0,0,0.85); /* dark translucent background */
+    color: #fff;
+    text-align: center;
+    padding: 1.5em 0;  /* set as you like */
+    margin: 0;
+    border-top: 2px solid var(--imdb-yellow);
+    box-sizing: border-box;
+}
+
+#footer.visible .site-footer {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
 /* Section base styling */
 .section {
     scroll-snap-align: start;
@@ -100,5 +129,12 @@
 .media canvas {
     display: block;
     width: 100% !important;
-    height: 400px !important; /* or whatever height you like */
+    height: 400px !important;
+}
+.media > canvas {
+    opacity: 0;
+    animation: fadein 0.8s forwards;
+}
+@keyframes fadein {
+    to { opacity: 1; }
 }
