@@ -103,34 +103,117 @@
     border-radius: 4px;
 }
 
-/* Synthesis cards */
-.synthesis .cards {
+/* Styles for the Quick Summary Section */
+.synthesis {
+    padding: 2rem 1rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Center everything horizontally */
 }
 
+.synthesis h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 2.5rem;
+    font-family: var(--font-title, 'Bebas Neue', Arial, sans-serif);
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Container for the cards - arranges them HORIZONTALLY */
+.synthesis .cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    max-width: 1280px;
+}
+
+/* Individual cards */
 .synthesis .card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 6px;
-    flex: 1 1 200px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex: 1 1 300px;      /* Base width of 300px, allows cards to grow/shrink */
+    max-width: 380px;     /* Max width for a card, adjust if needed */
+    text-align: left;
+    display: flex;        /* Use flex for internal card content alignment */
+    flex-direction: column; /* Stack h3 and p vertically inside the card */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.synthesis .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.synthesis .card h3 {
+    font-size: 1.25rem;
+    color: #f5c518;
+    margin-bottom: 0.75rem;
     text-align: center;
 }
 
-/* make our story canvases visible */
-.media {
-    width: 80%;
-    max-width: 900px;
+.synthesis .card p {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    flex-grow: 1;      /* Allows paragraph to take available space, helping with equal height */
+}
+
+/* Button styling */
+.synthesis button {
+    display: block;
     margin: 0 auto;
+    padding: 0.8rem 2rem;
+    background-color: #f5c518;
+    color: #121212;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.synthesis button:hover {
+    background-color: #e1b00a;
+    transform: scale(1.05);
+}
+@media (max-width: 900px) {
+    .synthesis .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.media {
+    width: 90vw; /* Or your desired width */
+    max-width: 1200px;
+    margin: 0 auto;
+    /* You can set a height for the container if you want the chart to have a specific aspect ratio
+       or a fixed height, and Chart.js will adapt. E.g.: */
+    /* height: 500px; */ /* Or use padding-bottom for aspect ratio trick */
 }
 
 .media canvas {
     display: block;
-    width: 100% !important;
-    height: 400px !important;
+    max-width: 100%; /* Allow it to be responsive within the container */
+    /* Let Chart.js determine the width and height attributes based on the container
+       and its responsive settings. Avoid setting width/height here with !important. */
+    /* width: 100% !important;  <-- REMOVE or AVOID */
+    /* height: 500px !important; <-- REMOVE or AVOID */
 }
+
+/* The fade-in animation is fine */
 .media > canvas {
     opacity: 0;
     animation: fadein 0.8s forwards;
