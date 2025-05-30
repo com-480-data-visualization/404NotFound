@@ -9,17 +9,22 @@ const layer3      = document.getElementById('layer3');
 let leftTooltip
 let rightTooltip
 
-const originalInit = window.initTimeline;
+const originalInit2 = window.initTimeline2;
 
 
 // replace your handleChange with a debounced version of doUpdate:
 const debouncedUpdate = debounce(doUpdate, 250);
 
-window.initTimeline = function() {
+window.initTimeline2 = function() {
+
+    console.log("ASDDDASASDDASDASDASDASDASDAS")
+    console.log("BASDASDA");
+
     // 1) call the real timeline setup
-    originalInit();
+
     leftTooltip = document.getElementById('left-tooltip');
     rightTooltip = document.getElementById('right-tooltip');
+    console.log(`tooltips ${leftTooltip} ${rightTooltip}`);
 
     // 2. make a MutationObserver whose callback fires whenever the text node changes
     const observer = new MutationObserver((mutations) => {

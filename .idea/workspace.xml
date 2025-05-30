@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="eb9e98e7-4d2d-4b69-a54d-93091ad82e5b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/analysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/analysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/explore.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/explore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/timeline.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/timeline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/explore.html" beforeDir="false" afterPath="$PROJECT_DIR$/explore.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,26 +47,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.downloadFamousPoster.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.getPoster.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/antoine/Documents/dv/404NotFound/data/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.start (1).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/antoine/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.index.html.executor": "Run",
+    "Node.js.downloadFamousPoster.js.executor": "Run",
+    "Node.js.getPoster.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "test__merge__from__Charline",
+    "last_opened_file_path": "/home/antoine/Documents/dv/404NotFound/data/images",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.start (1).executor": "Run",
+    "npm.start.executor": "Run",
+    "ts.external.directory.path": "/home/antoine/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/images" />
@@ -136,7 +139,8 @@
       <workItem from="1748016523856" duration="811000" />
       <workItem from="1748510817333" duration="10977000" />
       <workItem from="1748525171264" duration="10177000" />
-      <workItem from="1748535361790" duration="7568000" />
+      <workItem from="1748535361790" duration="8260000" />
+      <workItem from="1748590081447" duration="2815000" />
     </task>
     <servers />
   </component>
