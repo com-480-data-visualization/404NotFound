@@ -6,6 +6,42 @@ const layer1      = document.getElementById('layer1');
 const layer2      = document.getElementById('layer2');
 const layer3      = document.getElementById('layer3');
 
+let leftTooltip
+let rightTooltip
+
+const originalInit = window.initTimeline;
+
+
+// replace your handleChange with a debounced version of doUpdate:
+const debouncedUpdate = debounce(doUpdate, 50);
+
+window.initTimeline = function() {
+    // 1) call the real timeline setup
+    originalInit();
+    leftTooltip = document.getElementById('left-tooltip');
+    rightTooltip = document.getElementById('right-tooltip');
+
+    // 2. make a MutationObserver whose callback fires whenever the text node changes
+    const observer = new MutationObserver((mutations) => {
+        for (let m of mutations) {
+            // childList mutations will fire when textContent is reassigned
+            if (m.type === 'childList') {
+                debouncedUpdate()
+            }
+        }
+    });
+
+    // 3. start observing: watch for added or removed child nodes (i.e. the text node)
+    observer.observe(leftTooltip, {
+        childList: true,
+    });
+
+    observer.observe(rightTooltip, {
+        childList: true,
+    })
+};
+
+
 // allow focus to be mutable
 let focus = focusSelect.value;
 
@@ -29,18 +65,7 @@ function updateFocusDisplay() {
 // ——————————————————————————————————————————————————————————————
 // 2. whenever the user changes the focus <select>…
 // ——————————————————————————————————————————————————————————————
-focusSelect.addEventListener('change', () => {
-    focus = focusSelect.value;           // 2.a update our “focus” variable
-    updateFocusDisplay();                // 2.b refresh the labels on the page
-
-    // 2.c if the layers are valid, re-draw the chart with new focus
-    const l1 = layer1.value;
-    const l2 = layer2.value;
-    const l3 = layer3.value;
-    if (isValidSelection(l1, l2, l3)) {
-        drawBubbleChart(dataset, l1, l2, l3);
-    }
-});
+focusSelect.addEventListener('change', debouncedUpdate);
 
 // ——————————————————————————————————————————————————————————————
 // 3. on initial load, also call updateFocusDisplay()
@@ -58,20 +83,21 @@ const displayFocus = focusDisplayNames[focus]
 document.getElementById("Feature").textContent = capitalize(focus);
 document.getElementById("focus-word").textContent = displayFocus;
 
-const categoryFilter = document.getElementById("category-filter");
 
+let rawDataset = [];
 let dataset = [];
 
 
 fetch('assets/data/data_v2.csv')
     .then(response => response.text())
     .then(text => {
-      dataset = d3.csvParse(text);
-      dataset = filterByDate(dataset, minYear, maxYear);
 
       const defaultL1 = "genre";
       const defaultL2 = "budget";
       const defaultL3 = "language";
+
+      rawDataset = d3.csvParse(text);
+      dataset = getAnalysisFilteredData();
 
       if (isValidSelection(defaultL1, defaultL2, defaultL3)) {
         layer1.value = defaultL1;
@@ -82,44 +108,41 @@ fetch('assets/data/data_v2.csv')
 
       // Attacher les listeners
       [layer1, layer2, layer3].forEach(select => {
-        select.addEventListener("change", handleLayerChange);
+        select.addEventListener("change", debouncedUpdate);
       });
     });
 
+
+
 //Filter date
-function filterByDate(data, minYear, maxYear) {
-  return data.filter(d => {
-    const year = parseInt(d.year);
-    return year >= minYear && year <= maxYear;
+function getAnalysisFilteredData() {
+  if (!rawDataset || !rawDataset.length) return [];
+
+  const { startYear, endYear } = getSelectedYears();
+
+  return rawDataset.filter(d => {
+    const year = parseInt(d.year, 10);
+    return !isNaN(year) && year >= startYear && year <= endYear;
   });
 }
-
-function updateStats(data) {
-  document.getElementById("total_movies").textContent = data.length;
-}
-
 
 function isValidSelection(l1, l2, l3) {
   return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
 }
 
-function handleLayerChange() {
-  const l1 = layer1.value;
-  const l2 = layer2.value;
-  const l3 = layer3.value;
-
-  if (isValidSelection(l1, l2, l3)) {
-    drawBubbleChart(dataset, l1, l2, l3);
-  }
-}
 
 
+let bubbleCount = 0;
 //Bubble
 async function drawBubbleChart(data, layer1, layer2, layer3) {
+
+
+    bubbleCount++;
+    console.log("count", bubbleCount)
     // ─── 1. Build & value the hierarchy ────────────────────────────────
     const sortedData = [...data]
         .sort((a, b) => (+b.gross) - (+a.gross))
-        .slice(0, 100);  // TODO: change back to 100
+        .slice(0, 100);
 
     function getValue(d, key) {
         switch (key) {
@@ -170,8 +193,8 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
     // ─── 2. Layout & scales ─────────────────────────────────────────────
     const width  = 1000, height = 1000;
     const color = d3.scaleLinear()
-        .domain([0, 5])
-        .range(["hsl(50,100%,85%)","hsl(45,100%,40%)"])
+        .domain([0, 8])
+        .range(["hsl(50, 100%, 90%)","hsl(45,100%,40%)"])
         .interpolate(d3.interpolateHcl);
 
     const pack = d3.pack()
@@ -193,7 +216,7 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
         .attr("width", width)
         .attr("height", height)
         .style("max-width","100%").style("height","auto")
-        .style("cursor","pointer").style("background", color(0));
+        .style("cursor","pointer").style("background", "transparent");
 
     // ─── 4. Draw initial bubbles (white for leaves) ─────────────────
     const node = svg.append("g")
@@ -201,10 +224,10 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
         .data(root.descendants().slice(1))
         .join("circle")
         .attr("r", d => d.r)
-        .attr("fill", d => d.children ? color(d.depth) : "white")
+        .attr("fill", d => d.children ? color(d.depth*2+1) : "transparent") //more contrast
         .attr("pointer-events","all")
         .style("cursor","pointer")
-        .on("mouseover", function() { d3.select(this).attr("stroke","#000"); })
+        .on("mouseover", function() { d3.select(this).attr("stroke","#FFF"); })
         .on("mouseout",  function() { d3.select(this).attr("stroke",null); })
         .on("click", (event, d) => {
             if (d.children) {
@@ -286,7 +309,11 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
                 return t => zoomTo(i(t));
             });
 
-        label.filter(d => d.parent === currentFocus || this.style.display === "inline")
+        label.filter(function(d) {
+            // here `this` is the <text> element, so this.style.display works
+            return d.parent === currentFocus
+                || this.style.display === "inline";
+        })
             .transition(t)
             .style("fill-opacity", d => d.parent === currentFocus ? 1 : 0)
             .on("start", function(d) {
@@ -325,3 +352,32 @@ function goToDetailsPage(movieTitle, retries = 10) {
     localStorage.setItem('selectedMovie', JSON.stringify(selectedMovie));
     window.location.href = 'details.html';
 }
+
+
+// wrap your heavy draw in a debounced function
+function doUpdate() {
+    focus = focusSelect.value;           // 2.a update our “focus” variable
+    updateFocusDisplay();                // 2.b refresh the labels on the page
+
+    const l1 = layer1.value;
+    const l2 = layer2.value;
+    const l3 = layer3.value;
+
+    dataset = getAnalysisFilteredData();
+
+    if (isValidSelection(l1, l2, l3)) {
+        drawBubbleChart(dataset, l1, l2, l3);
+    }
+}
+
+// simple debounce helper
+function debounce(fn, delay) {
+    let id;
+    return (...args) => {
+        clearTimeout(id);
+        id = setTimeout(() => fn(...args), delay);
+    };
+}
+
+window.drawBubbleChart = drawBubbleChart;
+window.getAnalysisFilteredData = getAnalysisFilteredData;
