@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.target.id === 'hero') {
                     // Hide navbar when hero is visible
                     navbarWrap.classList.remove('visible');
+                    footerWrap.classList.remove('visible');
                 }
                 if (entry.target.id === 'section-recognition') {
                     // Hide footer when recognition section is visible
