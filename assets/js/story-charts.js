@@ -177,19 +177,54 @@ document.addEventListener('DOMContentLoaded', () => {
                         legend: { display: false },
                         title: {
                             display: true,
-                            text: 'Average ROI by Genre'
+                            text: 'Average ROI by Genre',
+                            color: '#FFFFFF',
+                            font: {
+                                size: 14
+                            }
                         }
                     },
                     scales: {
                         x: {
                             min: 0,
-                            beginAtZero: true,
-                            title: { display: true, text: 'Average ROI' },
-
+                            title: {
+                                display: true,
+                                text: 'Average ROI',
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                                borderColor: 'rgba(255, 255, 255, 0.1)'
+                            }
                         },
                         y: {
-                            title: { display: true, text: 'Genre' }
+                            title: {
+                                display: true,
+                                text: 'Genre',
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                color: '#FFFFFF', // Added: Y-axis tick labels (genre names) color
+                                font: {
+                                    size: 12
+                                }
+                            },
+
                         }
+
                     }
                 }
             }
@@ -274,16 +309,52 @@ document.addEventListener('DOMContentLoaded', () => {
                         legend: { display: false },
                         title: {
                             display: true,
-                            text: 'Most Popular Genres'
+                            text: 'Most Popular Genres',
+                            color: '#FFFFFF',
+                            font: {
+                                size: 14
+                            }
                         }
                     },
                     scales: {
                         x: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Number of Movies' }
+                            min: 0,
+                            title: {
+                                display: true,
+                                text: 'Number of Movies',
+                                color: '#FFFFFF', // Added: X-axis title color
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                                borderColor: 'rgba(255, 255, 255, 0.1)'
+                            }
                         },
                         y: {
-                            title: { display: true, text: 'Genre' }
+                            title: {
+                                display: true,
+                                text: 'Genre',
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 12
+                                }
+                            },
+
                         }
                     }
                 }
@@ -353,19 +424,47 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     title: {
                         display: true,
-                        text: 'Distribution of Movie Ratings'
+                        text: 'Distribution of Movie Ratings',
+                        color: '#FFFFFF',
+                        font: {
+                            size: 14
+                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)',
+                            borderColor: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#FFFFFF',
+                            font: {
+                                size: 12
+                            }
+                        },
 
                     },
+
                     x: {
                         title: {
                             display: true,
-                            text: 'Rating Range (0-10)'
+                            text: 'Rating Range (0-10)',
+                            color: '#FFFFFF',
+                            font: {
+                                size: 12
+                            }
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#FFFFFF',
+                            font: {
+                                size: 12
+                            }
                         }
+
                     }
                 }
             }
@@ -603,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             stepSize: 1,
                             autoSkipPadding: 10
                         },
+
                     },
                     y: {
                         type: 'logarithmic',
