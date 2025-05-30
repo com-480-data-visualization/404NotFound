@@ -22,13 +22,13 @@ Built with standard web technologies and D3.js for dynamic, interactive charts. 
 * **Clone the repo**
 
   ```bash
-  git@github.com:com-480-data-visualization/404NotFound.git
+  git clone git@github.com:com-480-data-visualization/404NotFound.git
   ```
 
 git clone [https://github.com/com-480-data-visualization/404NotFound.git](https://github.com/com-480-data-visualization/404NotFound.git)
 cd 404NotFound
 
-```
+
 - **Dependencies**  
   – None beyond a modern web browser  
   – All libraries (D3.js, Tom Select.js) are included in `/js`
@@ -37,12 +37,12 @@ cd 404NotFound
     `https://com-480-data-visualization.github.io/404NotFound/explore.html`
 
 ## Usage
-1. **Open** `index.html` in Chrome, Firefox, Safari, etc.
+1. **Open** `index.html` in Chrome, Firefox, Safari, WebStorm, etc.
 2. **Interact** via the timeline filter, dropdowns, and clickable chart elements.
 3. **Drill down** into bubbles or link flows to view detailed movie information.
 
 ## Project Structure
-```
+
 
 404NotFound/
 ├─ index.html          ← Homepage & project intro  
@@ -57,18 +57,21 @@ cd 404NotFound
 │  └─ js/              ← D3.js scripts & interactivity logic  
 └─ README.md           ← (you are here)  
 
-```
+
 
 ## Visualizations
 - **Sankey Diagram** (`explore.html`)  
   – Multi‐dimension flows between rating tiers, gross categories, and award counts  
   – Hover & click to isolate and filter the rest of the interface
+  ![bubble.jpeg](images/sankey.jpeg)
 - **Bubble Chart** (`analysis.html`)  
   – Three selectable “layers” (e.g. budget bin, genre, language)  
   – Success metric of choice (box‐office, rating, awards)  
   – Zoomable bubbles showing top‐100 films; click for poster & details
+![bubble.jpeg](images/bubble.jpeg)
 - **Detail View** (`detail.html`)  
   – Poster, synopsis, and all metadata for selected film
+![detail.jpeg](images/detail.jpeg)
 
 ## Continuous Deployment
 - Automatically published via GitHub Actions → GitHub Pages
@@ -79,4 +82,3 @@ cd 404NotFound
 This project is now closed for contributions and does not include an open‐source license.  
 Thank you for exploring!
 
-```
