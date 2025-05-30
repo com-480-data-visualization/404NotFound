@@ -132,13 +132,8 @@ function isValidSelection(l1, l2, l3) {
 
 
 
-let bubbleCount = 0;
 //Bubble
 async function drawBubbleChart(data, layer1, layer2, layer3) {
-
-
-    bubbleCount++;
-    console.log("count", bubbleCount)
     // ─── 1. Build & value the hierarchy ────────────────────────────────
     const sortedData = [...data]
         .sort((a, b) => (+b.gross) - (+a.gross))
@@ -238,51 +233,44 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
             }
         });
 
-    // ─── 5. Create patterns & then update leaf fills ────────────────
-    const defs   = svg.append("defs");
+    // Step 5: defs & async patterns
+    const defs = svg.append("defs");
     const leaves = root.leaves();
 
-    for (let i = 0; i < leaves.length; i++) {
-        const leaf = leaves[i];
+    // Kick off all your poster lookups in parallel:
+    const promises = leaves.map(async (leaf, i) => {
         const { title, year } = leaf.data.data;
         const pid = `poster-${i}`;
-
         const posterUrl = await getPosterUrl(title, year);
-        const ratio = 444 / 300;
-        const offset = (ratio - 1.0) / 2.0;
+        const ratio = 444/300, offset=(ratio-1)/2;
 
         const pattern = defs.append("pattern")
             .attr("id", pid)
-            .attr("patternUnits", "objectBoundingBox")
-            .attr("patternContentUnits", "objectBoundingBox")
-            .attr("width", 1)
-            .attr("height", 1);
+            .attr("patternUnits","objectBoundingBox")
+            .attr("patternContentUnits","objectBoundingBox")
+            .attr("width",1).attr("height",1);
 
-        if (posterUrl == null) {
-            // If no poster, just fill with a uniform color
+        if (!posterUrl) {
             pattern.append("rect")
-                .attr("width", 1)
-                .attr("height", 1)
-                .attr("fill", color(8)); // <-- uniform fallback color
+                .attr("width",1).attr("height",1)
+                .attr("fill", color(8));
         } else {
-            // If poster exists, insert the image
             pattern.append("image")
                 .attr("href", posterUrl)
-                .attr("preserveAspectRatio", "xMidYMid meet")
-                .attr("width", ratio)        // zoom
-                .attr("height", ratio)       // zoom
-                .attr("x", -offset)          // center horizontally
-                .attr("y", -offset);         // center vertically
+                .attr("preserveAspectRatio","xMidYMid meet")
+                .attr("width", ratio).attr("height", ratio)
+                .attr("x", -offset).attr("y", -offset);
         }
 
         leaf.patternId = pid;
-    }
+    });
 
-    // Replace each leaf’s white fill with its poster pattern
-    node.filter(d => !d.children)
-        .transition()
-        //.duration(500)
-        .attr("fill", d => `url(#${d.patternId})`);
+    // Once _all_ patterns are in place, update the leaves:
+    Promise.all(promises).then(() => {
+        node.filter(d => !d.children)
+            .transition()
+            .attr("fill", d => `url(#${d.patternId})`);
+    });
 
     // ─── 6. Labels ────────────────────────────────────────────────────
     const label = svg.append("g")
