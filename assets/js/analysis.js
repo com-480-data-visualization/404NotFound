@@ -248,22 +248,32 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
         const pid = `poster-${i}`;
 
         const posterUrl = await getPosterUrl(title, year);
-        const ratio = 444 / 300
-        const offset = (ratio-1.0)/2.0
+        const ratio = 444 / 300;
+        const offset = (ratio - 1.0) / 2.0;
 
-        defs.append("pattern")
+        const pattern = defs.append("pattern")
             .attr("id", pid)
             .attr("patternUnits", "objectBoundingBox")
             .attr("patternContentUnits", "objectBoundingBox")
             .attr("width", 1)
-            .attr("height", 1)
-            .append("image")
-            .attr("href", posterUrl)
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .attr("width",   ratio)        // zoom
-            .attr("height",  ratio)        // zoom
-            .attr("x",      -offset)       // center horizontally
-            .attr("y",      -offset);      // center vertically
+            .attr("height", 1);
+
+        if (posterUrl == null) {
+            // If no poster, just fill with a uniform color
+            pattern.append("rect")
+                .attr("width", 1)
+                .attr("height", 1)
+                .attr("fill", color(8)); // <-- uniform fallback color
+        } else {
+            // If poster exists, insert the image
+            pattern.append("image")
+                .attr("href", posterUrl)
+                .attr("preserveAspectRatio", "xMidYMid meet")
+                .attr("width", ratio)        // zoom
+                .attr("height", ratio)       // zoom
+                .attr("x", -offset)          // center horizontally
+                .attr("y", -offset);         // center vertically
+        }
 
         leaf.patternId = pid;
     }
@@ -271,20 +281,28 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
     // Replace each leaf’s white fill with its poster pattern
     node.filter(d => !d.children)
         .transition()
-        .duration(500)
+        //.duration(500)
         .attr("fill", d => `url(#${d.patternId})`);
 
     // ─── 6. Labels ────────────────────────────────────────────────────
     const label = svg.append("g")
-        .style("font","10px sans-serif")
-        .attr("pointer-events","none")
-        .attr("text-anchor","middle")
+        .style("font", "10px sans-serif")
+        .attr("pointer-events", "none")
+        .attr("text-anchor", "middle")
         .selectAll("text")
         .data(root.descendants())
         .join("text")
+        .style("fill", "white") // <- set text color to white
+        .style("stroke", "black") // <- stroke color (contour)
+        .style("stroke-width", "1px") // <- stroke thickness
+        .style("paint-order", "stroke") // <- make stroke render underneath fill
         .style("fill-opacity", d => d.parent === root ? 1 : 0)
-        .style("display",     d => d.parent === root ? "inline" : "none")
-        .text(d => d.data.name);
+        .style("display", d => d.parent === root ? "inline" : "none")
+        .text(d => shorterText(d.data.name, 20));
+
+    function shorterText(text, maxsize){
+        return text.length > maxsize ? text.slice(0, maxsize) : text;
+    }
 
     // ─── 7. Zoom setup ────────────────────────────────────────────────
     svg.on("click", event => zoom(event, root));
