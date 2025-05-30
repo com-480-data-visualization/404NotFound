@@ -63,15 +63,15 @@ cd 404NotFound
 - **Sankey Diagram** (`explore.html`)  
   – Multi‐dimension flows between rating tiers, gross categories, and award counts  
   – Hover & click to isolate and filter the rest of the interface
-  ![bubble.jpeg](images/sankey.jpeg)
+  ![bubble.jpeg](images/sankey.png)
 - **Bubble Chart** (`analysis.html`)  
   – Three selectable “layers” (e.g. budget bin, genre, language)  
   – Success metric of choice (box‐office, rating, awards)  
   – Zoomable bubbles showing top‐100 films; click for poster & details
-![bubble.jpeg](images/bubble.jpeg)
+![bubble.jpeg](images/bubble.png)
 - **Detail View** (`detail.html`)  
   – Poster, synopsis, and all metadata for selected film
-![detail.jpeg](images/detail.jpeg)
+![detail.jpeg](images/detail.png)
 
 ## Continuous Deployment
 - Automatically published via GitHub Actions → GitHub Pages
