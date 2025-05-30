@@ -1,59 +1,84 @@
-# Project of Data Visualization (COM-480)
+**Live Demo**
+[Explore the visualizations on GitHub Pages](https://com-480-data-visualization.github.io/404NotFound/index.html)
 
-| Student's name | SCIPER |
-| -------------- | ------ |
-|Cornaz Antoine | 339526|
-| Bürki Benjamin| 311199|
-| Charline Huangfu | 342201|
+---
 
-[Milestone 1](https://github.com/com-480-data-visualization/404NotFound/blob/master/Milestone%201.pdf) • [Milestone 2](https://github.com/com-480-data-visualization/404NotFound/blob/master/Milestone%202.pdf) • [Milestone 3](#milestone-3) • [Website](https://com-480-data-visualization.github.io/404NotFound/)
+## Overview
 
-## Milestone 1 (21st March, 5pm)
+What makes a film “successful”? Is it the budget, the genre, the language, or a combination of factors? This project explores over six decades of movie data (1960–2025) to uncover patterns behind commercial, critical, and award‐based success. By integrating box‐office figures, IMDb ratings, and Oscar counts, we reveal how these dimensions interact—and how they’ve shifted over time.
 
-**10% of the final grade**
+## Data Sources
 
-This is a preliminary milestone to let you set up goals for your final project and assess the feasibility of your ideas.
-Please, fill the following sections about your project.
+* **IMDb Movies (1960–2025)**
+  – Kaggle dataset of \~30,000 top films per year (budgets, grosses, ratings, runtime, etc.)
+  – CSV download: [https://www.kaggle.com/datasets/raedaddala/imdb-movies-from-1960-to-2023/data](https://www.kaggle.com/datasets/raedaddala/imdb-movies-from-1960-to-2023/data)
+* **OMDb API**
+  – Automatically retrieved movie posters to enrich the visuals
 
-*(max. 2000 characters per section)*
+## Technical Setup
 
-### Dataset
+Built with standard web technologies and D3.js for dynamic, interactive charts. No backend required.
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
+* **Clone the repo**
 
-### Problematic
+  ```bash
+  git clone git@github.com:com-480-data-visualization/404NotFound.git
+  ```
 
-> Frame the general topic of your visualization and the main axis that you want to develop.
-> - What am I trying to show with my visualization?
-> - Think of an overview for the project, your motivation, and the target audience.
-
-### Exploratory Data Analysis
-
-> Pre-processing of the data set you chose
-> - Show some basic statistics and get insights about the data
-
-### Related work
+git clone [https://github.com/com-480-data-visualization/404NotFound.git](https://github.com/com-480-data-visualization/404NotFound.git)
+cd 404NotFound
 
 
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+- **Dependencies**  
+  – None beyond a modern web browser  
+  – All libraries (D3.js, Tom Select.js) are included in `/js`
+- **Optional**  
+  – Visit directly on GitHub Pages:  
+    `https://com-480-data-visualization.github.io/404NotFound/explore.html`
 
-## Milestone 2 (18th April, 5pm)
+## Usage
+1. **Open** `index.html` in Chrome, Firefox, Safari, WebStorm, etc.
+2. **Interact** via the timeline filter, dropdowns, and clickable chart elements.
+3. **Drill down** into bubbles or link flows to view detailed movie information.
 
-**10% of the final grade**
-
-
-## Milestone 3 (30th May, 5pm)
-
-**80% of the final grade**
+## Project Structure
 
 
-## Late policy
+404NotFound/
+├─ index.html          ← Homepage & project intro  
+├─ explore.html        ← Sankey diagram of success metrics  
+├─ analysis.html       ← Bubble chart (budget, genre, language vs. success)  
+├─ detail.html         ← Movie‐level detail view  
+├─ assets/             ← Shared UI components  
+│  ├─ components/      ← navbar.html, footer.html, timeline.html  
+│  ├─ css/             ← Stylesheets (IMDb‐inspired yellow & dark theme)  
+│  ├─ data/            ← Cleaned CSV dataset  
+│  ├─ img/             ← Pre‐downloaded movie posters  
+│  └─ js/              ← D3.js scripts & interactivity logic  
+└─ README.md           ← (you are here)  
 
-- < 24h: 80% of the grade for the milestone
-- < 48h: 70% of the grade for the milestone
+
+
+## Visualizations
+- **Sankey Diagram** (`explore.html`)  
+  – Multi‐dimension flows between rating tiers, gross categories, and award counts  
+  – Hover & click to isolate and filter the rest of the interface
+  ![bubble.jpeg](images/sankey.png)
+- **Bubble Chart** (`analysis.html`)  
+  – Three selectable “layers” (e.g. budget bin, genre, language)  
+  – Success metric of choice (box‐office, rating, awards)  
+  – Zoomable bubbles showing top‐100 films; click for poster & details
+![bubble.jpeg](images/bubble.png)
+- **Detail View** (`detail.html`)  
+  – Poster, synopsis, and all metadata for selected film
+![detail.jpeg](images/detail.png)
+
+## Continuous Deployment
+- Automatically published via GitHub Actions → GitHub Pages
+- Any commit to `main` updates the live site at  
+  `https://com-480-data-visualization.github.io/404NotFound/`
+
+## License & Contributing
+This project is now closed for contributions and does not include an open‐source license.  
+Thank you for exploring!
 
