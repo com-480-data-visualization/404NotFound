@@ -97,7 +97,7 @@ fetch('assets/data/data_v2.csv')
       const defaultL3 = "language";
 
       rawDataset = d3.csvParse(text);
-      dataset = filterByDate(rawDataset, minYear, maxYear);
+      dataset = getAnalysisFilteredData();
 
       if (isValidSelection(defaultL1, defaultL2, defaultL3)) {
         layer1.value = defaultL1;
@@ -115,13 +115,16 @@ fetch('assets/data/data_v2.csv')
 
 
 //Filter date
-function filterByDate(data, minYear, maxYear) {
-  return data.filter(d => {
-    const year = parseInt(d.year);
-    return year >= minYear && year <= maxYear;
+function getAnalysisFilteredData() {
+  if (!rawDataset || !rawDataset.length) return [];
+
+  const { startYear, endYear } = getSelectedYears();
+
+  return rawDataset.filter(d => {
+    const year = parseInt(d.year, 10);
+    return !isNaN(year) && year >= startYear && year <= endYear;
   });
 }
-
 
 function isValidSelection(l1, l2, l3) {
   return l1 && l2 && l3 && new Set([l1, l2, l3]).size === 3;
@@ -360,7 +363,7 @@ function doUpdate() {
     const l2 = layer2.value;
     const l3 = layer3.value;
 
-    dataset = filterByDate(rawDataset, leftTooltip.textContent, rightTooltip.textContent);
+    dataset = getAnalysisFilteredData();
 
     if (isValidSelection(l1, l2, l3)) {
         drawBubbleChart(dataset, l1, l2, l3);
@@ -376,3 +379,5 @@ function debounce(fn, delay) {
     };
 }
 
+window.drawBubbleChart = drawBubbleChart;
+window.getAnalysisFilteredData = getAnalysisFilteredData;

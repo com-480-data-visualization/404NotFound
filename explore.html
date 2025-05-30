@@ -8,6 +8,7 @@
   <title>Cinematic Success Data Vizualization</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/theme.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -24,8 +25,11 @@
         <p> This page offers an overview of various aspects that contribute to a movie's success — from <span class="stress-word">financial performance</span>, to <span class="stress-word">audience reception</span>, and <span class="stress-word">industry awards</span>. <br>
         Dive into key characteristics to explore how different movies succeed in unique ways.</p>
 
-    </section>
+        <p>Total Movies : <span id="total_movies">Calculating...</span></p>
 
+  </section>
+
+    <!--
     <div class="filter-container">
         <div class="filter-dropdown">
 
@@ -38,35 +42,53 @@
         </select>
 
     </div>
+  -->
 
-    <p>Total Movies : <span id="total_movies">Calculating...</span></p>
+  <div class="features-selectors">
+    <div class="dropdown-container">
+      <label for="genre-filter">Genre</label>
+      <select id="genre-filter" multiple placeholder="Select genres..."></select>
+    </div>
+    <div class="dropdown-container">
+      <label for="budget-filter">Budget</label>
+      <select id="budget-filter" multiple placeholder="Select budgets..."></select>
+    </div>
+    <div class="dropdown-container">
+      <label for="language-filter">Languages</label>
+      <select id="language-filter" multiple placeholder="Select languages..."></select>
+    </div>
+  </div>
 
-    <div class="average-stats">
-      <div>
-        <strong>Average Gross :</strong><br><span id="average-gross">Calculating...</span>
-      </div>
-      <div>
-        <strong>Average Rating : </strong><br><span id="average-rating">Calculating...</span>
-      </div>
-      <div>
-        <strong>Average Awards :</strong><br><span id="average-awards">Calculating...</span>
-      </div>
+  <div class="average-stats">
+    <div>
+      <strong>Average Gross :</strong><br><span id="average-gross">Calculating...</span>
+    </div>
+    <div>
+      <strong>Average Rating : </strong><br><span id="average-rating">Calculating...</span>
+    </div>
+    <div>
+      <strong>Average Awards :</strong><br><span id="average-awards">Calculating...</span>
     </div>
   </div>
 
     
+  <div class = "sankey">
     <div id="sankey-container"></div>
+    <div id = "tooltip"></div>
+  </div>
 
     
-    <div id="timeline"></div>
-    <div id="footer"></div>
+  <div id="timeline"></div>
+  <div id="footer"></div>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
-    
-    <script src="assets/js/timeline.js"></script>
-    <script src="assets/js/bar.js"></script>
-    <script src="assets/js/explore.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
+  <script src="assets/js/explore.js"></script>
+  <script src="assets/js/timeline.js"></script>
+  <script src="assets/js/bar.js"></script>
+  
     
 
 </body>
