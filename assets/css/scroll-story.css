@@ -119,18 +119,25 @@
     text-align: center;
 }
 
-/* make our story canvases visible */
 .media {
-    width: 80%;
-    max-width: 900px;
+    width: 90vw; /* Or your desired width */
+    max-width: 1200px;
     margin: 0 auto;
+    /* You can set a height for the container if you want the chart to have a specific aspect ratio
+       or a fixed height, and Chart.js will adapt. E.g.: */
+    /* height: 500px; */ /* Or use padding-bottom for aspect ratio trick */
 }
 
 .media canvas {
     display: block;
-    width: 100% !important;
-    height: 400px !important;
+    max-width: 100%; /* Allow it to be responsive within the container */
+    /* Let Chart.js determine the width and height attributes based on the container
+       and its responsive settings. Avoid setting width/height here with !important. */
+    /* width: 100% !important;  <-- REMOVE or AVOID */
+    /* height: 500px !important; <-- REMOVE or AVOID */
 }
+
+/* The fade-in animation is fine */
 .media > canvas {
     opacity: 0;
     animation: fadein 0.8s forwards;
