@@ -193,8 +193,8 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
     // ─── 2. Layout & scales ─────────────────────────────────────────────
     const width  = 1000, height = 1000;
     const color = d3.scaleLinear()
-        .domain([0, 5])
-        .range(["hsl(50,100%,85%)","hsl(45,100%,40%)"])
+        .domain([0, 8])
+        .range(["hsl(50, 100%, 90%)","hsl(45,100%,40%)"])
         .interpolate(d3.interpolateHcl);
 
     const pack = d3.pack()
@@ -216,7 +216,7 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
         .attr("width", width)
         .attr("height", height)
         .style("max-width","100%").style("height","auto")
-        .style("cursor","pointer").style("background", color(0));
+        .style("cursor","pointer").style("background", "transparent");
 
     // ─── 4. Draw initial bubbles (white for leaves) ─────────────────
     const node = svg.append("g")
@@ -224,10 +224,10 @@ async function drawBubbleChart(data, layer1, layer2, layer3) {
         .data(root.descendants().slice(1))
         .join("circle")
         .attr("r", d => d.r)
-        .attr("fill", d => d.children ? color(d.depth) : "white")
+        .attr("fill", d => d.children ? color(d.depth*2+1) : "transparent") //more contrast
         .attr("pointer-events","all")
         .style("cursor","pointer")
-        .on("mouseover", function() { d3.select(this).attr("stroke","#000"); })
+        .on("mouseover", function() { d3.select(this).attr("stroke","#FFF"); })
         .on("mouseout",  function() { d3.select(this).attr("stroke",null); })
         .on("click", (event, d) => {
             if (d.children) {

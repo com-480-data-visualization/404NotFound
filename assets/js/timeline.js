@@ -123,7 +123,8 @@ function drag(handle) {
   };
 
 function triggerUpdate() {
-  const scrollY = window.scrollY;
+  const scrollY = window.scrollY; // Save position
+
 
   try {
     const filteredExplore = window.getExploreFilteredData?.();
@@ -147,7 +148,7 @@ function triggerUpdate() {
     console.error("Erreur dans triggerUpdate:", e);
   }
 
-  window.scrollTo({ top: scrollY });
+  window.scrollTo({ top: scrollY }); // Stay at position
 }
 
 
