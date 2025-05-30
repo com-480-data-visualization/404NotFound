@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     showLoading('chart-roi');
+    showLoading('chart-popularGenres');
     showLoading('chart-rating');
     showLoading('chart-awards');
 
@@ -39,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'section-financial',
             chartId: 'chart-roi',
             renderFn: renderROIChart
+        },
+        {
+            id: 'section-mostPopular',
+            chartId: 'chart-popularGenres',
+            renderFn: renderPopularGenresChart
         },
         {
             id: 'section-critical',
@@ -78,16 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Chart renderers ----
 
     function renderROIChart(data) {
-
         const genreMap = {};
 
         data.forEach(r => {
             const roi = parseFloat(r.ROI);
-            if (isNaN(roi)) return;
+
+
+            if (isNaN(roi)) {
+                return;
+            }
 
             let genresString = r.genre_grouped;
+
             if (!genresString || typeof genresString !== 'string') {
-                console.warn("Missing or invalid genresString for row:", r);
+                console.warn("renderROIChart: Missing or invalid genresString for row:", r);
                 return;
             }
 
@@ -99,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 individualGenres.forEach(genre => {
                     if (!genre) return;
+
                     if (!genreMap[genre]) {
                         genreMap[genre] = { sum: 0, count: 0 };
                     }
@@ -106,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     genreMap[genre].count += 1;
                 });
             } catch (e) {
-                console.error("Error parsing genres: ", genresString, "for row:", r, e);
-
+                console.error("renderROIChart: Error parsing genres: ", genresString, "for row:", r, e);
+                return;
             }
         });
 
@@ -122,6 +133,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const values = entries.map(item => +item.avgRoi.toFixed(2));
 
 
+        const baseColorROI = { r: 245, g: 197, b: 24 }; // Standard IMDB Yellow
+        const darkFactorROI = 0.4;
+
+        const backgroundColorsROI = labels.map((_, i) => {
+
+            const t = (labels.length - 1 - i) / Math.max(1, labels.length - 1);
+
+            const r = Math.round(baseColorROI.r * (darkFactorROI + (1 - darkFactorROI) * t) );
+            const g = Math.round(baseColorROI.g * (darkFactorROI + (1 - darkFactorROI) * t) );
+            const b = Math.round(baseColorROI.b * (darkFactorROI + (1 - darkFactorROI) * t) );
+            return `rgba(${r}, ${g}, ${b}, 1)`;
+        });
+
+        const hoverBackgroundColorsROI = backgroundColorsROI.map(color => {
+            const [r, g, b] = color.match(/\d+/g).map(Number);
+            // Make hover slightly lighter and less opaque
+            return `rgba(${Math.min(255, r + 20)}, ${Math.min(255, g + 15)}, ${Math.min(255, b + 10)}, 0.85)`;
+        });
+
 
         new Chart(
             document.getElementById('chart-roi').getContext('2d'),
@@ -132,29 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     datasets: [{
                         label: 'Average ROI',
                         data: values,
-                        backgroundColor: function(context) {
-
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) {
-                                return 'rgba(245, 197, 24, 1)';
-                            }
-                            const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-                            gradient.addColorStop(0, 'rgba(245, 197, 24, 1)');
-                            gradient.addColorStop(1, 'rgba(215, 165, 0, 1)');
-                            return gradient;
-                        },
-                        borderColor: 'rgba(180, 130, 0, 0.8)',
-                        borderWidth: 1
+                        backgroundColor: backgroundColorsROI,
+                        borderColor: backgroundColorsROI,
+                        borderWidth: 1,
+                        hoverBackgroundColor: hoverBackgroundColorsROI,
+                        hoverBorderColor: hoverBackgroundColorsROI
                     }]
                 },
                 options: {
-
                     devicePixelRatio: window.devicePixelRatio || 1,
-
                     indexAxis: 'y',
                     responsive: true,
-                    maintainAspectRatio: true,
                     plugins: {
                         legend: { display: false },
                         title: {
@@ -164,10 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     scales: {
                         x: {
+                            min: 0,
+                            beginAtZero: true,
+                            title: { display: true, text: 'Average ROI' },
 
                         },
                         y: {
-
+                            title: { display: true, text: 'Genre' }
                         }
                     }
                 }
@@ -175,6 +196,100 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
+    function renderPopularGenresChart(data) {
+        const genreCounts = {};
+
+        data.forEach(r => {
+            let genresString = r.genre_grouped;
+
+            if (!genresString || typeof genresString !== 'string') {
+                console.warn("renderPopularGenresChart: Missing or invalid genresString for row:", r);
+                return;
+            }
+
+            try {
+                const individualGenres = genresString
+                    .slice(1, -1)
+                    .split(',')
+                    .map(g => g.trim().replace(/['"]/g, ''));
+
+                individualGenres.forEach(genre => {
+                    if (!genre) return;
+                    if (!genreCounts[genre]) {
+                        genreCounts[genre] = 0;
+                    }
+                    genreCounts[genre]++;
+                });
+            } catch (e) {
+                console.error("renderPopularGenresChart: Error parsing genres: ", genresString, "for row:", r, e);
+                return;
+            }
+        });
+
+        const entries = Object.entries(genreCounts)
+            .map(([genre, count]) => ({ genre, count }))
+            .sort((a, b) => b.count - a.count); // Sort by count descending
+
+        const labels = entries.map(item => item.genre);
+        const values = entries.map(item => item.count);
+
+        const baseColor = { r: 245, g: 197, b: 24 };
+        const darkFactor = 0.5;
+
+        const backgroundColors = labels.map((_, i) => {
+            const t = (labels.length - 1 - i) / Math.max(1, labels.length - 1);
+            const r = Math.round(baseColor.r * (darkFactor + (1 - darkFactor) * t) );
+            const g = Math.round(baseColor.g * (darkFactor + (1 - darkFactor) * t) );
+            const b = Math.round(baseColor.b * (darkFactor + (1 - darkFactor) * t) );
+            return `rgba(${r}, ${g}, ${b}, 1)`;
+        });
+
+        const hoverBackgroundColors = backgroundColors.map(color => {
+            const [r, g, b] = color.match(/\d+/g).map(Number);
+            return `rgba(${Math.min(255, r + 20)}, ${Math.min(255, g + 15)}, ${Math.min(255, b + 10)}, 0.85)`;
+        });
+
+
+        new Chart(
+            document.getElementById('chart-popularGenres').getContext('2d'),
+            {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Number of Movies',
+                        data: values,
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors,
+                        borderWidth: 1,
+                        hoverBackgroundColor: hoverBackgroundColors,
+                        hoverBorderColor: hoverBackgroundColors
+                    }]
+                },
+                options: {
+                    devicePixelRatio: window.devicePixelRatio || 1,
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Most Popular Genres'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Number of Movies' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Genre' }
+                        }
+                    }
+                }
+            }
+        );
+    }
 
 
 
@@ -216,7 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             return 'rgba(245, 197, 24, 1)';
                         }
-
 
                         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom); // For vertical bars
 
@@ -263,7 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderAwardsChart(data) {
         if (!data || data.length === 0) {
             console.error("renderAwardsChart: No data provided or data is empty.");
-            // ... (error display code remains the same)
             const canvas = document.getElementById('chart-awards');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
@@ -333,7 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("LOG Budget range for color scale (minBudgetLog, maxBudgetLog):", minBudgetLog, maxBudgetLog);
 
         const points = data.map((r, index) => {
-            // ... (parsing for x, y, title remains the same)
             const rawOscars = r.oscars;
             const rawGross = r.gross_worldwide;
             const rawBudget = r.budget;
@@ -424,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }]
             },
-            options: { // ... (rest of the options: devicePixelRatio, responsive, plugins, scales)
+            options: {
                 devicePixelRatio: window.devicePixelRatio || 1,
                 responsive: true,
                 maintainAspectRatio: true,
